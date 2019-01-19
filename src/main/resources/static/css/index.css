@@ -1,0 +1,99 @@
+/** 全局 */
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    background: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.fix:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0
+}
+
+/** 头部 */
+.header {
+    background-color: #1bc795;
+    text-align: center;
+    padding: 25px 0px;
+}
+
+.header h1 {
+    color: #fff;
+    font-size: 42px;
+}
+
+.header p {
+    margin: 20px 0px;
+    font-size: 20px;
+    color: #fff;
+}
+
+/** 主要模块 */
+.main {
+    margin: 0;
+    padding: 0 0 20px 0;
+    background: #f9fafc;
+    border-bottom: 1px solid #eee;
+}
+
+/** 内容列表 */
+.items {
+    text-align: center;
+}
+
+.items ul {
+    list-style: none;
+    text-align: center;
+}
+
+.items li {
+    display: inline-block;
+    width: 340px;
+    height: 177px;
+    margin: 20px 5px 0px 5px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 14px;
+    border-top: solid 3px #fff;
+    background: #fff;
+    -webkit-box-shadow: 0px 2px 3px #ddd;
+    -moz-box-shadow: 0px 2px 3px #ddd;
+    box-shadow: 0px 2px 3px #ddd;
+}
+
+.items p {
+    margin-top: 5px;
+    line-height: 35px;
+    font-size: 18px;
+    color: #000;
+}
+
+.items span {
+    color: #333;
+}
+
+.items img {
+    height: 50px;
+    margin-top: 35px;
+}
+
+.items li:hover {
+    border-top: solid 3px #6abf84;
+    -webkit-box-shadow: 0px 2px 3px #ccc;
+    -moz-box-shadow: 0px 2px 3px #ccc;
+    box-shadow: 0px 2px 3px #ccc;
+}
+
+.items p:hover {
+    color: #6abf84;
+}
