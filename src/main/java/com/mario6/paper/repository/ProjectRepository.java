@@ -1,7 +1,7 @@
 package com.mario6.paper.repository;
 
 import com.mario6.paper.model.Project;
-import com.mario6.paper.model.ProjectVersion;
+
 import java.util.List;
 
 /**
@@ -19,6 +19,4 @@ public interface ProjectRepository {
     List<Project> findAll();
 
     int delete(String id);
-
-    int saveProjectVersion(ProjectVersion projectVersion);
 }

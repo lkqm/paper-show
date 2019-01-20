@@ -9,6 +9,6 @@ package com.mario6.paper.common;
 public class ServiceException extends RuntimeException {
 
     public ServiceException(String message) {
-
+        super(message);
     }
 }

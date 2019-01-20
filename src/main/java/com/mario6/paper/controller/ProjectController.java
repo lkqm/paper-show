@@ -1,18 +1,13 @@
 package com.mario6.paper.controller;
 
 import com.mario6.paper.model.Project;
-import com.mario6.paper.model.ProjectVersion;
 import com.mario6.paper.service.ProjectService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 项目控制器
@@ -46,16 +41,20 @@ public class ProjectController {
     }
 
     // 上传某个项目的版本
-    @PostMapping("/{id}/versions")
-    public void saveVersions(@PathVariable String id, ProjectVersion projectVersion, @RequestParam("file") MultipartFile file) {
-        projectVersion.setProjectId(id);
-        projectService.saveProjectVersion(projectVersion, file);
+    @PostMapping("/{id}/upload")
+    public void upload(@PathVariable String id,
+                       String entranceUri,
+                       @RequestParam("file") MultipartFile file) {
+        Project project = new Project();
+        project.setId(id);
+        project.setEntranceUri(entranceUri);
+        projectService.saveProjectFile(project, file);
     }
 
     // 下载项目
     @GetMapping("/{id}/download")
-    public File download(@PathVariable String id, @RequestParam(name = "v", required = false) String version) {
-        String dir = projectService.getProjectFilePath(id, version);
+    public File download(@PathVariable String id) {
+        String dir = projectService.getProjectFilePath(id);
         return new File(dir);
     }
 }

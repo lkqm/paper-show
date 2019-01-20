@@ -1,8 +1,8 @@
 package com.mario6.paper.model;
 
-import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 项目实体
@@ -18,5 +18,14 @@ public class Project implements Serializable {
     private String creator;
     private Long createTime;
     private Long updateTime;
-    private List<ProjectVersion> versions;
+
+    /**
+     * 项目入口: index.html
+     */
+    private String entranceUri;
+
+    /**
+     * 是否已经上传
+     */
+    private Boolean uploaded;
 }
