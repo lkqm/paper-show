@@ -3,74 +3,118 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>原型大全-极客修</title>
-    <meta itemprop="name" content="原型大全-极客修"/>
-    <meta itemprop="image" content="//rs.jikexiu.com/resources/images/faviconie.ico"/>
-    <meta name="Keywords" content="原型大全-极客修">
-    <meta name="Description" itemprop="description" content="原型大全-极客修">
-
-    <link rel="shortcut icon" type="image/x-icon"
-          href="//rs.jikexiu.com/resources/images/faviconie.ico">
+    <meta itemprop="name" content="原型大全"/>
+    <meta name="Keywords" content="原型大全">
+    <meta name="Description" itemprop="description" content="原型大全">
     <link type="text/css" rel="styleSheet" href="css/index.css"/>
+    <link type="text/css" rel="styleSheet" href="module/bootstrap/css/bootstrap.css"/>
 </head>
 <body>
 <div class="header">
-    <h1>原型大全-极客修</h1>
+    <h1 id="title">原型大全</h1>
     <p>...</p>
 </div>
 
 <div class="main">
-    <div class="items fix">
-        <ul>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/nexus-clear.png"/>
-                    <p>Nexus</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/jenkins.png"/>
-                    <p>Jenkins</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="http://dev.admin.jikexiu.com/20180908095450.jpg"/>
-                    <p>Rocketmq</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/dubbo.png"/>
-                    <p>登录名：root,密码：root</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/elastic-logo.svg"/>
-                    <p>Elasticsearch</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/64jira.png"/>
-                    <p>Jira</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/20180908095450.jpg"/>
-                    <p>Apollo</p>
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="#">
-                    <img src="//dev.admin.jikexiu.com/20180908095450.jpg"/>
-                    <p>Pinpoint</p>
-                </a>
-            </li>
-        </ul>
+    <ul id="projects" class="items fix">
+        <li>电子发票</li>
+        <li>单品促销</li>
+        <li>回收</li>
+        <li>评价</li>
+        <li>单品促销</li>
+        <li>回收</li>
+        <li>评价</li>
+    </ul>
+</div>
+
+<!-- 弹出框 -->
+<div>
+    <!-- 项目详情 -->
+    <div id="projectInfoDialog" style="display: none; padding: 20px;">
+        <h3 class="jsName" style="text-align: center; font-size: 20px; font-weight: normal; padding: 0;">电子发票</h3>
+        <p style="text-align: center; color: gray;">
+            <span class="jsCreator"></span>
+            <span>, <span class="jsCreateTime"></span></span>
+            <span>, <span class="jsUpdateTime"></span></span>
+        </p>
+        <p>描述: <span class="jsDescription"></span></p>
+        <p>版本: <span class="jsVersions"></span></p>
+        <p class="jsAction">操作: <a class="btn btn-link">预览</a><a class="btn btn-link">下载</a><a
+                class="btn btn-link">删除</a></p>
+    </div>
+
+    <!-- 添加项目 -->
+    <div id="addProjectDialog" style="display: none; padding: 20px;">
+        <form id="addProjectForm" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">ID:</label>
+                <div class="controls">
+                    <input class="input-xlarge" name="id" type="text" placeholder="可选">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">项目名称:</label>
+                <div class="controls">
+                    <input class="input-xlarge" name="name" type="text" placeholder="请输入4~8个字符">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">创建人:</label>
+                <div class="controls">
+                    <input class="input-xlarge" name="creator" type="text" placeholder="你的名字">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">描述:</label>
+                <div class="controls">
+                    <textarea name="description" rows="3" placeholder="可选备注..."
+                              style="width: 270px; resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 上传一个版本 -->
+    <div id="addVersionDialog" style="display: none; padding: 20px;">
+        <form id="addVersionFrom" class="form-horizontal" enctype="multipart/form-data">
+            <input name="projectId" type="hidden">
+            <div class="control-group">
+                <label class="control-label">项目名称:</label>
+                <div class="controls">
+                    <span class="jsProjectName input-xlarge uneditable-input"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">文件(zip):</label>
+                <div class="controls">
+                    <input name="file" type="file" accept="application/zip">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">入口地址:</label>
+                <div class="controls">
+                    <input name="entranceUri" type="text" placeholder="index.html">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">提交</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
+
+</div>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="module/layer/layer.js"></script>
+<script type="text/javascript" src="module/js/bootstrap.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

@@ -1,17 +1,22 @@
 package com.mario6.paper.service;
 
-import static com.mario6.paper.common.AssertUtils.checkParam;
-import static com.mario6.paper.common.AssertUtils.checkParamNotNull;
-
+import com.mario6.paper.common.ArchiveUtilsExt;
+import com.mario6.paper.common.FileUtils;
+import com.mario6.paper.config.PaperProperties;
 import com.mario6.paper.model.Project;
-import com.mario6.paper.model.ProjectVersion;
 import com.mario6.paper.repository.ProjectRepository;
-import java.util.List;
-import javax.annotation.Resource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import static com.mario6.paper.common.AssertUtils.checkParam;
+import static com.mario6.paper.common.AssertUtils.checkParamNotNull;
 
 /**
  * ProjectService
@@ -21,6 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class ProjectService {
+
+    @Resource
+    private PaperProperties config;
 
     @Resource
     private ProjectRepository repository;
@@ -36,9 +44,13 @@ public class ProjectService {
             Project p = repository.findOne(id);
             checkParam(p==null, "项目标示已存在");
         } else {
-            id = RandomStringUtils
-                .random(6, "ABCDEFGHIJQMNOPQRSTUVWXYZ0123456789");
+            id = RandomStringUtils.random(6, "ABCDEFGHIJQMNOPQRSTUVWXYZ0123456789");
+            project.setId(id);
         }
+        long time = System.currentTimeMillis();
+        project.setCreateTime(time);
+        project.setUpdateTime(time);
+        project.setUploaded(false);
         repository.save(project);
         return id;
     }
@@ -62,30 +74,40 @@ public class ProjectService {
 
     /**
      * 保存一个一个项目版本
-     * @param projectVersion
+     * @param params
      * @param file
      */
-    public void saveProjectVersion(ProjectVersion projectVersion, MultipartFile file) {
-        Project project = checkSaveProjectVersionParams(projectVersion);
-        // TODO: 文件存储
-        String id = projectVersion.getId();
-        if(StringUtils.isEmpty(id)) {
-            List<ProjectVersion> versions = project.getVersions();
-            if(versions == null || versions.size() == 0) {
-                id = "v1";
-            } else {
-                ProjectVersion pversion = versions.get(0);
-                String lastId = pversion.getId();
-                id = "v1.1";
+    public void saveProjectFile(Project params, MultipartFile file) {
+        String projectId = params.getId();
+        Project project = checkSaveProjectFileParams(projectId, file);
+
+        String workDir = config.getWorkDir();
+        String targetFilePath = workDir + File.separator + "upload" + File.separator + project.getId() + '-' + System.currentTimeMillis() + "-" + file.getOriginalFilename();
+        String projectPath = workDir + File.separator + "projects" + File.separator + project.getId() + "/";
+        FileUtils.makeParent(targetFilePath);
+        File targetFile = new File(targetFilePath);
+        try {
+            file.transferTo(targetFile);
+            FileUtils.emptyDir(projectPath);
+            File projectFile = new File(projectPath);
+            if (!projectFile.exists()) {
+                projectFile.mkdirs();
             }
-            projectVersion.setId(id);
+            ArchiveUtilsExt.unZip(targetFilePath, projectPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        repository.saveProjectVersion(projectVersion);
+
+        project.setUploaded(true);
+        project.setEntranceUri(params.getEntranceUri());
+        project.setUpdateTime(System.currentTimeMillis());
+        repository.save(project);
     }
 
-    private Project checkSaveProjectVersionParams(ProjectVersion projectVersion) {
-        String projectId = projectVersion.getProjectId();
+    private Project checkSaveProjectFileParams(String projectId, MultipartFile file) {
         checkParam(StringUtils.isNotEmpty(projectId), "参数projectId不能为空");
+        checkParamNotNull(file, "上传文件不能为空");
+        checkParam(!file.isEmpty(), "上传文件不能为空");
         projectId = StringUtils.trim(projectId);
         Project project = repository.findOne(projectId);
         checkParamNotNull(project, "项目不存在");
@@ -95,14 +117,11 @@ public class ProjectService {
     /**
      * 获取存储文件目录
      * @param id
-     * @param version
      * @return
      */
-    public String getProjectFilePath(String id, String version) {
-        return null;
-    }
-
-    private String getProjectDir(String projectId, String version) {
-        return null;
+    public String getProjectFilePath(String id) {
+        String workDir = config.getWorkDir();
+        String projectPath = workDir + File.separator + "projects" + File.separator + id;
+        return projectPath;
     }
 }

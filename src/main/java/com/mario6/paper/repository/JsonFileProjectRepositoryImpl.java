@@ -6,19 +6,14 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.mario6.paper.config.PaperProperties;
 import com.mario6.paper.model.Project;
 import com.mario6.paper.model.ProjectDataWrapper;
-import com.mario6.paper.model.ProjectVersion;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Resource;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 /**
  * JsonFileProjectRepositoryImpl
@@ -44,9 +39,15 @@ public class JsonFileProjectRepositoryImpl implements ProjectRepository {
         List<Project> projects = data.getProjects();
         Project orgProject = doGetProjectById(data, project.getId());
         if(orgProject != null) {
-            return 0;
+            orgProject.setUpdateTime(project.getUpdateTime());
+            orgProject.setCreator(project.getCreator());
+            orgProject.setDescription(project.getDescription());
+            orgProject.setName(project.getName());
+            orgProject.setUploaded(project.getUploaded());
+            orgProject.setEntranceUri(project.getEntranceUri());
+        } else {
+            projects.add(0, project);
         }
-        projects.add(0, project);
         writeData(data);
         return 1;
     }
@@ -75,54 +76,9 @@ public class JsonFileProjectRepositoryImpl implements ProjectRepository {
         return count;
     }
 
-    @Override
-    public int saveProjectVersion(ProjectVersion projectVersion) {
-        String pid = projectVersion.getProjectId();
-        ProjectDataWrapper data = readData();
-        Project project = doGetProjectById(data, pid);
-        if(project == null) return 0;
-        String vid = projectVersion.getId();
-        ProjectVersion orgVersion = doGetVersionById(project, vid);
-        long updateTime = System.currentTimeMillis();
-        if(orgVersion != null) {
-            // 修改
-            orgVersion.setUpdateTime(updateTime);
-            orgVersion.setDescription(projectVersion.getDescription());
-        } else {
-            // 添加
-            ProjectVersion newVersion = new ProjectVersion();
-            newVersion.setId(projectVersion.getId());
-            newVersion.setProjectId(projectVersion.getProjectId());
-            newVersion.setCreateTime(updateTime);
-            newVersion.setDescription(projectVersion.getDescription());
-            newVersion.setUpdateTime(updateTime);
-            List<ProjectVersion> versions = project.getVersions();
-            if(versions == null) {
-                versions = new ArrayList<>();
-                project.setVersions(versions);
-            }
-            versions.add(0, newVersion);
-        }
-        project.setUpdateTime(updateTime);
-        writeData(data);
-        return 1;
-    }
-
     private Project doGetProjectById(ProjectDataWrapper data, String id) {
         List<Project> projects = data.getProjects();
         for(Project one: projects) {
-            if(one == null) continue;
-            if(StringUtils.equals(id, one.getId())) {
-                return one;
-            }
-        }
-        return null;
-    }
-
-    private ProjectVersion doGetVersionById(Project project, String id) {
-        List<ProjectVersion> versions = project.getVersions();
-        if(versions == null) return null;
-        for(ProjectVersion one: versions) {
             if(one == null) continue;
             if(StringUtils.equals(id, one.getId())) {
                 return one;
