@@ -15,7 +15,7 @@ public class PreviewController {
     @Resource
     private ProjectService projectService;
 
-    @RequestMapping("/v/{id}")
+    @RequestMapping("/v/{id}/")
     public String projectIndex(@PathVariable String id) {
         Project project = projectService.getProject(id);
         String entrance = "index.html";

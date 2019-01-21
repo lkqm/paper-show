@@ -18,6 +18,10 @@
         // 添加表单
         $('#addProjectForm').submit(function (evt) {
             evt.preventDefault();
+            var submitBtn = $('#addProjectForm button[type=submit]').attr('disabled', true);
+            submitBtn.text('提交中...');
+            $('#addProjectTips').html('');
+
             var dataArray = $(this).serializeArray();
             var postData = $(this).serialize();
             $.ajax({
@@ -35,9 +39,10 @@
                         message = data.message;
                     }
                     $('#addProjectTips').html(message);
-                    setTimeout(function () {
-                        $('#addProjectTips').html('');
-                    }, 2600);
+                },
+                complete: function() {
+                    submitBtn.attr('disabled', false);
+                    submitBtn.text('提交');
                 }
             });
         });
@@ -46,7 +51,7 @@
             var projectId = $(this).data('id');
             var project = getProjectDataById(projectId);
             if (project && project.uploaded) {
-                var url = window.location.origin + ctx + '/v/' + projectId;
+                var url = 'v/' + projectId + '/';
                 window.open(url);
             } else {
                 layer.msg("项目暂未上传原型");
@@ -56,10 +61,10 @@
         // 上传版本表单
         $('#addVersionFrom').submit(function (evt) {
             evt.preventDefault();
-            var layerIdx = layer.load(1, {
-                shade: [0.2,'#000']
-            });
+            // 提示
+            var layerIdx = layer.load(1, { shade: [0.2,'#000'] });
             var submitBtn = $('#addVersionFrom button[type=submit]').attr('disabled', true);
+            $('#addVersionTips').html('上传中...');
 
             var dataArray = $(this).serializeArray();
             var dataMap = {};
@@ -92,7 +97,7 @@
                 complete: function() {
                     submitBtn.attr('disabled', false);
                     layer.close(layerIdx);
-                    $('#addVersionTips').html('上传中...');
+                    $('#addVersionTips').html('');
                 }
             });
         });
