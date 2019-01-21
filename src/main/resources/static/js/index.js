@@ -56,6 +56,11 @@
         // 上传版本表单
         $('#addVersionFrom').submit(function (evt) {
             evt.preventDefault();
+            var layerIdx = layer.load(1, {
+                shade: [0.2,'#000']
+            });
+            var submitBtn = $('#addVersionFrom button[type=submit]').attr('disabled', true);
+
             var dataArray = $(this).serializeArray();
             var dataMap = {};
             for (var i in dataArray) {
@@ -83,9 +88,11 @@
                         message = data.message;
                     }
                     $('#addVersionTips').html(message);
-                    setTimeout(function () {
-                        $('#addVersionTips').html('');
-                    }, 2600);
+                },
+                complete: function() {
+                    submitBtn.attr('disabled', false);
+                    layer.close(layerIdx);
+                    $('#addVersionTips').html('上传中...');
                 }
             });
         });
