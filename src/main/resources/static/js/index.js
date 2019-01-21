@@ -1,5 +1,5 @@
 (function (window) {
-    var api = '/api';
+    var api = 'api';
     var ctx = '';
 
     function init() {
