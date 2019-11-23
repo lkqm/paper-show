@@ -34,6 +34,8 @@ public class ArchiveUtilsExt {
             destDirFile.mkdirs();
         }
 
+        String zipPrefixPath = getZipPrefixPath(zipFile);
+
         ZipArchiveInputStream is = null;
         List<String> fileNames = new ArrayList<String>();
 
@@ -44,11 +46,16 @@ public class ArchiveUtilsExt {
             while ((entry = is.getNextZipEntry()) != null) {
                 fileNames.add(entry.getName());
 
+                String contentFileName = entry.getName();
+                if (zipPrefixPath != null) {
+                    contentFileName = contentFileName.substring(zipPrefixPath.length());
+                }
+
                 if (entry.isDirectory()) {
-                    File directory = new File(destDir, entry.getName());
+                    File directory = new File(destDir, contentFileName);
                     directory.mkdirs();
                 } else {
-                    File targetFile = new File(destDir, entry.getName());
+                    File targetFile = new File(destDir, contentFileName);
                     File targetDir = targetFile.getParentFile();
                     targetDir.mkdirs();
                     OutputStream os = null;
@@ -81,4 +88,58 @@ public class ArchiveUtilsExt {
         File zipFile = new File(zipfile);
         return unZip(zipFile, destDir);
     }
+
+    /**
+     * 获取统一前缀
+     *
+     * @param zipFile
+     * @return
+     */
+    private static String getZipPrefixPath(File zipFile) {
+        List<String> paths = getZipContentFilePaths(zipFile);
+        String prefix = null;
+        for (int i = 0; i < paths.size(); i++) {
+            String path = paths.get(i);
+            boolean hasPrefix = true;
+            if (path.startsWith("__MACOSX")) continue;
+            for (int j = i + 1; j < paths.size(); j++) {
+                String path2 = paths.get(j);
+                if (path2.startsWith("__MACOSX")) continue;
+                if (!path2.startsWith(path)) {
+                    hasPrefix = false;
+                    break;
+                }
+            }
+            if (hasPrefix) {
+                prefix = path;
+                break;
+            }
+        }
+        return prefix;
+    }
+
+    /**
+     * 获取指定zip压缩内容文件路径
+     *
+     * @param zipFile
+     * @return
+     */
+    private static List<String> getZipContentFilePaths(File zipFile) {
+        List<String> fileNames = new ArrayList<>();
+
+        ZipArchiveInputStream is = null;
+        try {
+            is = new ZipArchiveInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
+            ZipArchiveEntry entry = null;
+            while ((entry = is.getNextZipEntry()) != null) {
+                fileNames.add(entry.getName());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
+        return fileNames;
+    }
+
 }
