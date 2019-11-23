@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.17.RELEASE</version>
+        <version>1.5.22.RELEASE</version>
     </parent>
 
     <properties>
@@ -36,12 +36,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.18</version>
+            <version>1.19</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.54</version>
+            <version>1.2.62</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -61,15 +61,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.10</version>
-                <configuration>
-                    <repository>lkqm/${project.build.artifactId}</repository>
-                    <tag>${project.version}</tag>
-                </configuration>
             </plugin>
         </plugins>
     </build>
