@@ -48,9 +48,12 @@ public class ArchiveUtilsExt {
                     File directory = new File(destDir, entry.getName());
                     directory.mkdirs();
                 } else {
+                    File targetFile = new File(destDir, entry.getName());
+                    File targetDir = targetFile.getParentFile();
+                    targetDir.mkdirs();
                     OutputStream os = null;
                     try {
-                        os = new BufferedOutputStream(new FileOutputStream(new File(destDir, entry.getName())), BUFFER_SIZE);
+                        os = new BufferedOutputStream(new FileOutputStream(targetFile), BUFFER_SIZE);
                         IOUtils.copy(is, os);
                     } finally {
                         IOUtils.closeQuietly(os);
