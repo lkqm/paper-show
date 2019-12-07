@@ -1,7 +1,6 @@
-package com.mario6.paper.core.config;
+package com.github.lkqm.paper.core;
 
-import com.mario6.paper.common.FileUtils;
-import com.mario6.paper.core.PaperProperties;
+import com.github.lkqm.paper.util.FileUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;

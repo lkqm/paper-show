@@ -1,4 +1,4 @@
-package com.mario6.paper.common;
+package com.github.lkqm.paper.util;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;

@@ -1,7 +1,7 @@
-package com.mario6.paper.controller;
+package com.github.lkqm.paper.controller;
 
-import com.mario6.paper.model.Project;
-import com.mario6.paper.service.ProjectService;
+import com.github.lkqm.paper.model.Project;
+import com.github.lkqm.paper.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

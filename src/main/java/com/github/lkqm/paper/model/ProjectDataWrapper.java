@@ -1,8 +1,9 @@
-package com.mario6.paper.model;
+package com.github.lkqm.paper.model;
+
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import lombok.Data;
 
 /**
  * ProjectJsonWrapper

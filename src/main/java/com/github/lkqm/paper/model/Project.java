@@ -1,4 +1,4 @@
-package com.mario6.paper.model;
+package com.github.lkqm.paper.model;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.mario6.paper.core;
+package com.github.lkqm.paper.core;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 
-import static com.mario6.paper.core.PaperProperties.PREFIX;
+import static com.github.lkqm.paper.core.PaperProperties.PREFIX;
 
 /**
  * PaperShowConfiguration

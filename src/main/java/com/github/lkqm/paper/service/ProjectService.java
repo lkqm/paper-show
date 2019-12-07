@@ -1,10 +1,10 @@
-package com.mario6.paper.service;
+package com.github.lkqm.paper.service;
 
-import com.mario6.paper.common.ArchiveUtilsExt;
-import com.mario6.paper.common.FileUtils;
-import com.mario6.paper.core.PaperProperties;
-import com.mario6.paper.model.Project;
-import com.mario6.paper.repository.ProjectRepository;
+import com.github.lkqm.paper.core.PaperProperties;
+import com.github.lkqm.paper.model.Project;
+import com.github.lkqm.paper.repository.ProjectRepository;
+import com.github.lkqm.paper.util.ArchiveUtilsExt;
+import com.github.lkqm.paper.util.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static com.mario6.paper.common.AssertUtils.checkParam;
-import static com.mario6.paper.common.AssertUtils.checkParamNotNull;
+import static com.github.lkqm.paper.util.AssertUtils.checkParam;
+import static com.github.lkqm.paper.util.AssertUtils.checkParamNotNull;
 
 /**
  * 项目相关服务

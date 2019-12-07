@@ -1,6 +1,6 @@
-package com.mario6.paper.repository;
+package com.github.lkqm.paper.repository;
 
-import com.mario6.paper.model.Project;
+import com.github.lkqm.paper.model.Project;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

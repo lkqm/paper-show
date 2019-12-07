@@ -1,4 +1,4 @@
-package com.mario6.paper;
+package com.github.lkqm.paper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

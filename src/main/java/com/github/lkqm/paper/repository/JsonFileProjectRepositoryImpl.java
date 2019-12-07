@@ -1,11 +1,11 @@
-package com.mario6.paper.repository;
+package com.github.lkqm.paper.repository;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONReader;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.mario6.paper.core.PaperProperties;
-import com.mario6.paper.model.Project;
-import com.mario6.paper.model.ProjectDataWrapper;
+import com.github.lkqm.paper.core.PaperProperties;
+import com.github.lkqm.paper.model.Project;
+import com.github.lkqm.paper.model.ProjectDataWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
