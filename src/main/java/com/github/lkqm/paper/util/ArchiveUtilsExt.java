@@ -47,7 +47,7 @@ public class ArchiveUtilsExt {
                 fileNames.add(entry.getName());
 
                 String contentFileName = entry.getName();
-                if (zipPrefixPath != null) {
+                if (zipPrefixPath != null && contentFileName.startsWith(zipPrefixPath)) {
                     contentFileName = contentFileName.substring(zipPrefixPath.length());
                 }
 
@@ -101,10 +101,10 @@ public class ArchiveUtilsExt {
         for (int i = 0; i < paths.size(); i++) {
             String path = paths.get(i);
             boolean hasPrefix = true;
-            if (path.startsWith("__MACOSX")) continue;
+            if (path.startsWith("__MACOSX") || path.startsWith(".DS_Store")) continue;
             for (int j = i + 1; j < paths.size(); j++) {
                 String path2 = paths.get(j);
-                if (path2.startsWith("__MACOSX")) continue;
+                if (path2.startsWith("__MACOSX") || path2.startsWith(".DS_Store")) continue;
                 if (!path2.startsWith(path)) {
                     hasPrefix = false;
                     break;

@@ -84,6 +84,7 @@
                 success: function () {
                     layer.closeAll();
                     layer.msg('上传成功');
+                    $('#addVersionTips').html('');
                     loadProjects();
                 },
                 error: function (request) {
@@ -97,7 +98,6 @@
                 complete: function() {
                     submitBtn.attr('disabled', false);
                     layer.close(layerIdx);
-                    $('#addVersionTips').html('');
                 }
             });
         });

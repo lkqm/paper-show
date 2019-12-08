@@ -67,7 +67,7 @@
 
     <!-- 上传一个版本 -->
     <div id="addVersionDialog" style="display: none; padding: 20px;">
-        <form id="addVersionFrom" class="form-horizontal" enctype="multipart/form-data">
+        <form id="addVersionFrom" class="form-horizontal" enctype="multipart/form-data;charset=utf-8">
             <input name="projectId" type="hidden">
             <div class="control-group">
                 <label class="control-label">项目名称:</label>
@@ -86,13 +86,6 @@
                 <div class="controls">
                     <input name="entranceUri" type="text" placeholder="index.html">
                 </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label"></label>
-                <p class="controls">
-                    * 上传文件速度较慢, 测试结果10M=90s, 20M=150s<br/>
-                    * 文件zip格式
-                </p>
             </div>
             <div class="control-group">
                 <div class="controls">
