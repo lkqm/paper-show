@@ -3,7 +3,7 @@ package com.github.lkqm.paper.repository;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONReader;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.github.lkqm.paper.core.PaperProperties;
+import com.github.lkqm.paper.config.PaperProperties;
 import com.github.lkqm.paper.model.Project;
 import com.github.lkqm.paper.model.ProjectDataWrapper;
 import org.apache.commons.lang3.StringUtils;

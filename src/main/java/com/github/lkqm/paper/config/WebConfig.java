@@ -1,4 +1,4 @@
-package com.github.lkqm.paper.core;
+package com.github.lkqm.paper.config;
 
 import com.github.lkqm.paper.util.FileUtils;
 import org.springframework.context.annotation.Configuration;

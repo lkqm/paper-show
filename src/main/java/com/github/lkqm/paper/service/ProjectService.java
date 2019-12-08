@@ -1,6 +1,6 @@
 package com.github.lkqm.paper.service;
 
-import com.github.lkqm.paper.core.PaperProperties;
+import com.github.lkqm.paper.config.PaperProperties;
 import com.github.lkqm.paper.model.Project;
 import com.github.lkqm.paper.repository.ProjectRepository;
 import com.github.lkqm.paper.util.ArchiveUtilsExt;
