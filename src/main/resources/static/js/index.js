@@ -40,18 +40,34 @@
                     }
                     $('#addProjectTips').html(message);
                 },
-                complete: function() {
+                complete: function () {
                     submitBtn.attr('disabled', false);
                     submitBtn.text('提交');
                 }
             });
         });
+
+        $(':radio').on('change', function () {
+            var targetType = $(this).val();
+            $('#addVersionFrom .projectTypeArea').each(function () {
+                let type = $(this).data('value');
+                if (type == targetType) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
         // 预览跳转
         $('#projects').on('click', 'li', function () {
             var projectId = $(this).data('id');
             var project = getProjectDataById(projectId);
             if (project && project.uploaded) {
                 var url = 'v/' + projectId + '/';
+                if (project.type === 2) {
+                    url = project.linkUrl;
+                }
                 window.open(url);
             } else {
                 layer.msg("项目暂未上传原型");
@@ -74,6 +90,14 @@
             }
             var projectId = dataMap['projectId'];
             var formData = new FormData(this);
+            let projectType = dataMap['type'];
+            if (projectType != 1) {
+                formData.delete("file");
+                formData.delete("entranceUri");
+            }
+            if (projectType != 2) {
+                formData.delete("linkUrl");
+            }
             $.ajax({
                 url: api + '/projects/' + projectId + '/upload',
                 type: 'post',
@@ -185,6 +209,31 @@
                 $('#addVersionFrom .jsProjectName').html(project.name);
                 $('#addVersionFrom [name=projectId]').val(project.id);
                 $('#addVersionFrom [name=entranceUri]').val(project.entranceUri);
+                $('#addVersionFrom [name=linkUrl]').val(project.linkUrl);
+                $('#addVersionFrom [name=type]').each(function () {
+                    let type = $(this).val();
+                    if (type == project.type) {
+                        $(this).attr('checked', 'true');
+                    }
+                });
+                if (project.type) {
+                    $('#addVersionFrom .projectTypeArea').each(function () {
+                        let type = $(this).data('value');
+                        if (type == project.type) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                } else {
+                    $('#addVersionFrom .projectTypeArea').each(function () {
+                        let type = $(this).data('value');
+                        if (type != 1) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
                 var allowTypes = ["application/zip"];
                 if (files && files.length == 1 && allowTypes.indexOf(files[0].type) != -1) {
                     $('#addVersionFrom [name=file]')[0].files = files;

@@ -45,6 +45,8 @@ public class JsonFileProjectRepositoryImpl implements ProjectRepository {
             orgProject.setName(project.getName());
             orgProject.setUploaded(project.getUploaded());
             orgProject.setEntranceUri(project.getEntranceUri());
+            orgProject.setType(project.getType());
+            orgProject.setLinkUrl(project.getLinkUrl());
         } else {
             projects.add(0, project);
         }

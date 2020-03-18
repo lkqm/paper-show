@@ -37,10 +37,12 @@ public class ProjectController {
     }
 
     @PostMapping("/{id}/upload")
-    public void upload(@PathVariable String id, String entranceUri, @RequestPart("file") MultipartFile file) {
+    public void upload(@PathVariable String id, @RequestParam(required = false, defaultValue = "1") Integer type, String linkUrl, String entranceUri, MultipartFile file) {
         Project project = new Project();
         project.setId(id);
         project.setEntranceUri(entranceUri);
+        project.setType(type);
+        project.setLinkUrl(linkUrl);
         projectService.saveProjectFile(project, file);
     }
 }

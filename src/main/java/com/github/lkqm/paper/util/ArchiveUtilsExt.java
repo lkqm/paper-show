@@ -100,14 +100,16 @@ public class ArchiveUtilsExt {
         String prefix = null;
         for (int i = 0; i < paths.size(); i++) {
             String path = paths.get(i);
-            boolean hasPrefix = true;
+            boolean hasPrefix = false;
             if (path.startsWith("__MACOSX") || path.startsWith(".DS_Store")) continue;
             for (int j = i + 1; j < paths.size(); j++) {
                 String path2 = paths.get(j);
                 if (path2.startsWith("__MACOSX") || path2.startsWith(".DS_Store")) continue;
                 if (!path2.startsWith(path)) {
-                    hasPrefix = false;
                     break;
+                }
+                if (j == paths.size() - 1) {
+                    hasPrefix = true;
                 }
             }
             if (hasPrefix) {

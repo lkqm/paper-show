@@ -1,6 +1,7 @@
 package com.github.lkqm.paper.service;
 
 import com.github.lkqm.paper.config.PaperProperties;
+import com.github.lkqm.paper.constant.ProjectType;
 import com.github.lkqm.paper.model.Project;
 import com.github.lkqm.paper.repository.ProjectRepository;
 import com.github.lkqm.paper.util.ArchiveUtilsExt;
@@ -109,21 +110,28 @@ public class ProjectService {
     public void saveProjectFile(Project params, MultipartFile file) {
         Project project = checkSaveProjectFileParams(params, file);
 
-        // 存储文件
-        String workDir = config.getWorkDir();
-        String absWorkDir = new File(workDir).getAbsolutePath();
-        String targetFilePath = absWorkDir + File.separator + PaperProperties.UPLOAD_DIR_NAME + File.separator + project.getId() + '-' + System.currentTimeMillis() + "-" + file.getOriginalFilename();
-        FileUtils.makeParent(targetFilePath);
-        try {
-            file.transferTo(new File(targetFilePath));
-            // 解压到指定目录
-            String projectPath = absWorkDir + File.separator + PaperProperties.PROJECTS_DIR_NAME + File.separator + project.getId() + File.separator;
-            FileUtils.emptyDir(projectPath);
-            ArchiveUtilsExt.unZip(targetFilePath, projectPath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        ProjectType type = ProjectType.of(params.getType());
+
+        if (type == ProjectType.FILE) {
+            // 存储文件
+            String workDir = config.getWorkDir();
+            String absWorkDir = new File(workDir).getAbsolutePath();
+            String targetFilePath = absWorkDir + File.separator + PaperProperties.UPLOAD_DIR_NAME + File.separator + project.getId() + '-' + System.currentTimeMillis() + "-" + file.getOriginalFilename();
+            FileUtils.makeParent(targetFilePath);
+            try {
+                file.transferTo(new File(targetFilePath));
+                // 解压到指定目录
+                String projectPath = absWorkDir + File.separator + PaperProperties.PROJECTS_DIR_NAME + File.separator + project.getId() + File.separator;
+                FileUtils.emptyDir(projectPath);
+                ArchiveUtilsExt.unZip(targetFilePath, projectPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (type == ProjectType.LINK) {
+            project.setLinkUrl(params.getLinkUrl());
         }
 
+        project.setType(params.getType());
         project.setUploaded(true);
         project.setEntranceUri(params.getEntranceUri());
         project.setUpdateTime(System.currentTimeMillis());
@@ -131,21 +139,27 @@ public class ProjectService {
     }
 
     private Project checkSaveProjectFileParams(Project params, MultipartFile file) {
+        params.setEntranceUri(StringUtils.trim(params.getEntranceUri()));
+        params.setLinkUrl(StringUtils.trim(params.getLinkUrl()));
+
         String id = StringUtils.trim(params.getId());
         checkParam(StringUtils.isNotEmpty(id), "参数projectId不能为空");
         Project project = repository.findOne(id);
         checkParamNotNull(project, "项目不存在");
 
-        String entrance = StringUtils.trim(params.getEntranceUri());
-        if (StringUtils.isNotEmpty(entrance)) {
-            checkParam(entrance.matches("^[A-Za-z0-9\\-_\\.]*$"), "入口地址, 只支持字母,数字,下划线, 小数点和中划线");
-        }
+        ProjectType type = ProjectType.of(params.getType());
+        checkParamNotNull(type, "参数type无效");
+        if (type == ProjectType.FILE) {
+            String entrance = params.getEntranceUri();
+            if (StringUtils.isNotEmpty(entrance)) {
+                checkParam(entrance.matches("^[A-Za-z0-9\\-_\\.]*$"), "入口地址, 只支持字母,数字,下划线, 小数点和中划线");
+            }
 
-        checkParamNotNull(file, "上传文件不能为空");
-        checkParam(!file.isEmpty(), "上传文件不能为空");
-        // 重设参数
-        params.setId(id);
-        params.setEntranceUri(entrance);
+            checkParamNotNull(file, "上传文件不能为空");
+            checkParam(!file.isEmpty(), "上传文件不能为空");
+        } else if (type == ProjectType.LINK) {
+            checkParam(StringUtils.isNotEmpty(params.getLinkUrl()), "跳转链接不能为空");
+        }
 
         return project;
     }

@@ -76,15 +76,32 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">文件(zip):</label>
+                <label class="control-label">类型:</label>
                 <div class="controls">
-                    <input name="file" type="file" accept="application/zip">
+                    <input name="type" type="radio" value="1" checked>文件
+                    <input name="type" type="radio" value="2">外链
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label">入口地址:</label>
-                <div class="controls">
-                    <input name="entranceUri" type="text" placeholder="index.html">
+            <div class="projectTypeArea" data-value="1">
+                <div class="control-group">
+                    <label class="control-label">文件(zip):</label>
+                    <div class="controls">
+                        <input name="file" type="file" accept="application/zip">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">入口地址:</label>
+                    <div class="controls">
+                        <input name="entranceUri" type="text" placeholder="index.html">
+                    </div>
+                </div>
+            </div>
+            <div class="projectTypeArea" data-value="2">
+                <div class="control-group">
+                    <label class="control-label">链接:</label>
+                    <div class="controls">
+                        <input name="linkUrl" type="text" placeholder="跳转链接">
+                    </div>
                 </div>
             </div>
             <div class="control-group">
