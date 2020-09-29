@@ -2,73 +2,47 @@ package com.github.lkqm.paper.model
 
 
 /**
- * ProjectJsonWrapper
- *
- * @author Mario Luo
- * @date 2019.01.19 13:48
+ * 项目包装
  */
-open class ProjectDataWrapper {
+data class ProjectDataWrapper (
     var projects: MutableList<Project>? = null
-}
+)
 
 /**
  * 项目实体
- *
- * @author Mario Luo
- * @date 2019.01.19 10:48
  */
-open class Project {
+data class Project (
 
-    /**
-     * 项目Id
-     */
-    var id: String? = null
+    /** 项目Id */
+    var id: String? = null,
 
-    /**
-     * 项目名称
-     */
-    var name: String? = null
+    /** 项目名称 */
+    var name: String? = null,
 
-    /**
-     * 项目描述
-     */
-    var description: String? = null
+    /** 项目描述 */
+    var description: String? = null,
 
-    /**
-     * 项目创建人
-     */
-    var creator: String? = null
+    /** 项目创建人 */
+    var creator: String? = null,
 
-    /**
-     * 项目创建时间
-     */
-    var createTime: Long? = null
+    /** 项目创建时间 */
+    var createTime: Long? = null,
 
-    /**
-     * 项目更新时间
-     */
-    var updateTime: Long? = null
+    /** 项目更新时间 */
+    var updateTime: Long? = null,
 
-    /**
-     * 类型, 1: 上传文件, 2: 外部地址
-     */
-    var type: Int? = 1
+    /** 类型, 1: 上传文件, 2: 外部地址 */
+    var type: Int? = 1,
 
-    /**
-     * 项目入口: index.html
-     */
-    var entranceUri: String? = null
+    /** 项目入口: index.html */
+    var entranceUri: String? = null,
 
-    /**
-     * 是否已经上传
-     */
-    var uploaded: Boolean? = null
+    /** 是否已经上传 */
+    var uploaded: Boolean? = null,
 
-    /**
-     * 外部跳转地址
-     */
+    /** 外部跳转地址 */
     var linkUrl: String? = null
-}
+)
 
 /**
  * 项目类型

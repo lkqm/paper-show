@@ -13,13 +13,10 @@ import java.util.*
 import javax.annotation.Resource
 
 /**
- * JsonFileProjectRepositoryImpl
- *
- * @author Mario Luo
- * @date 2019.01.19 11:53
+ * 基于JSON文件的项目存储
  */
 @Component
-class JsonFileProjectRepositoryImpl : ProjectRepository {
+class JsonFileProjectRepository : ProjectRepository {
 
     @Resource
     private lateinit var configuration: PaperProperties
@@ -57,7 +54,7 @@ class JsonFileProjectRepositoryImpl : ProjectRepository {
         return listOf()
     }
 
-    override fun delete(id: String?): Int {
+    override fun delete(id: String): Int {
         val data = readData()
         val projects = data.projects
         var count = 0

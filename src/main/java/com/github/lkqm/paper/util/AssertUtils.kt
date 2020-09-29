@@ -14,13 +14,13 @@ object AssertUtils {
      * @param expression 期望值
      * @param message 不满足期望值的消息
      */
-    fun checkParam(expression: Boolean, message: String?, vararg msgParams: Any?) {
+    fun checkIsTrue(expression: Boolean, message: String?, vararg msgParams: Any?) {
         if (!expression) {
             throw ServiceException(message)
         }
     }
 
-    fun checkParamNotNull(obj: Any?, message: String?, vararg msgParams: Any?) {
+    fun checkIsNotNull(obj: Any?, message: String?, vararg msgParams: Any?) {
         if (obj == null) {
             throw ServiceException(message)
         }

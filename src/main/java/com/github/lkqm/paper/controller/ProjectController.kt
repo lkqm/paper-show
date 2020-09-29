@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile
 import javax.annotation.Resource
 
 /**
- * 项目控制器
+ * 项目控制层
  */
 @RestController
 @RequestMapping("/api/projects")
@@ -17,12 +17,12 @@ class ProjectController {
     private lateinit var projectService: ProjectService
 
     @PostMapping
-    fun addProject(project: Project): String? {
+    fun addProject(project: Project): String {
         return projectService.saveProject(project)
     }
 
     @GetMapping
-    fun listProject(): List<Project?>? {
+    fun listProject(): List<Project> {
         return projectService.getProjects()
     }
 
@@ -32,7 +32,8 @@ class ProjectController {
     }
 
     @PostMapping("/{id}/upload")
-    fun upload(@PathVariable id: String?, @RequestParam(required = false, defaultValue = "1") type: Int?, linkUrl: String?, entranceUri: String?, file: MultipartFile) {
+    fun upload(@PathVariable id: String, @RequestParam(required = false, defaultValue = "1") type: Int,
+               linkUrl: String?, entranceUri: String?, file: MultipartFile) {
         val project = Project()
         project.id = id
         project.entranceUri = entranceUri

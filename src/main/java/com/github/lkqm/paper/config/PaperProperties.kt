@@ -5,14 +5,12 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 /**
- * PaperShowConfiguration
- *
- * @author Mario Luo
- * @date 2019.01.19 13:28
+ * 应用配置类
  */
 @Component
 @ConfigurationProperties(prefix = PaperProperties.PREFIX)
 open class PaperProperties {
+
     /** 数据存储目录  */
     var workDir = System.getProperty("user.home") + File.separator + ".paper-show"
 

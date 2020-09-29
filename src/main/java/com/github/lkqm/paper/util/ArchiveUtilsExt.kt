@@ -11,7 +11,9 @@ import java.util.*
  * 压缩相关工具类
  */
 object ArchiveUtilsExt {
-    const val BUFFER_SIZE = 1024
+
+    // 缓冲区大小
+    private const val BUFFER_SIZE = 1024
 
     /**
      * 解压 zip 文件
@@ -76,7 +78,7 @@ object ArchiveUtilsExt {
      * @return 返回 zip 压缩文件里的文件名的 list
      * @throws Exception
      */
-    fun unZip(zipfile: String?, destDir: String): List<String> {
+    fun unZip(zipfile: String, destDir: String): List<String> {
         val zipFile = File(zipfile)
         return unZip(zipFile, destDir)
     }
