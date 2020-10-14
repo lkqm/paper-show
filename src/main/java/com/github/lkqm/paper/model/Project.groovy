@@ -1,65 +1,59 @@
-package com.github.lkqm.paper.model;
-
-import lombok.Data;
-
-import java.io.Serializable;
-
+package com.github.lkqm.paper.model
 /**
  * 项目实体
  *
  * @author Mario Luo
  * @date 2019.01.19 10:48
  */
-@Data
-public class Project implements Serializable {
+class Project implements Serializable {
 
     /**
      * 项目Id
      */
-    private String id;
+    String id
 
     /**
      * 项目名称
      */
-    private String name;
+    String name
 
     /**
      * 项目描述
      */
-    private String description;
+    String description
 
     /**
      * 项目创建人
      */
-    private String creator;
+    String creator
 
     /**
      * 项目创建时间
      */
-    private Long createTime;
+    Long createTime
 
     /**
      * 项目更新时间
      */
-    private Long updateTime;
+    Long updateTime
 
     /**
      * 类型, 1: 上传文件, 2: 外部地址
      */
-    private Integer type = 1;
+    Integer type = 1
 
     /**
      * 项目入口: index.html
      */
-    private String entranceUri;
+    String entranceUri
 
     /**
      * 是否已经上传
      */
-    private Boolean uploaded;
+    Boolean uploaded
 
     /**
      * 外部跳转地址
      */
-    private String linkUrl;
+    String linkUrl
 }
