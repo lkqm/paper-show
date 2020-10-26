@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>原型大全</title>
+    <meta itemprop="name" content="原型大全"/>
+    <meta name="Keywords" content="原型大全">
+    <meta name="Description" itemprop="description" content="原型大全">
+    <link type="text/css" rel="styleSheet" href="static/css/index.css"/>
+    <link type="text/css" rel="styleSheet" href="static/module/bootstrap/css/bootstrap.css"/>
+</head>
+<body>
+<div class="header">
+    <h1 id="title">{{.title}}</h1>
+    <p>...</p>
+</div>
+
+<div class="main">
+    <ul id="projects" class="items fix">
+        <!--
+        <li>
+            <p>电子发票</p>
+            <span>xx</span>
+        </li>
+        -->
+    </ul>
+</div>
+
+<!-- 弹出框 -->
+<div>
+    <!-- 添加项目 -->
+    <div id="addProjectDialog" style="display: none; padding: 20px;">
+        <form id="addProjectForm" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">ID:</label>
+                <div class="controls">
+                    <input class="input-xlarge" name="id" type="text" placeholder="可选, 字母和数字">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">项目名称:</label>
+                <div class="controls">
+                    <input class="input-xlarge" name="name" type="text" placeholder="请输入2~12个字符">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">创建人:</label>
+                <div class="controls">
+                    <input class="input-xlarge" name="creator" type="text" placeholder="你的名字">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">描述:</label>
+                <div class="controls">
+                    <textarea name="description" rows="3" placeholder="备注..."
+                              style="width: 270px; resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button id="addProjectBtn" type="submit" class="btn">提交</button>
+                    <sapn id="addProjectTips" style="color: red;"></sapn>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 上传一个版本 -->
+    <div id="addVersionDialog" style="display: none; padding: 20px;">
+        <form id="addVersionFrom" class="form-horizontal" enctype="multipart/form-data;charset=utf-8">
+            <input name="projectId" type="hidden">
+            <div class="control-group">
+                <label class="control-label">项目名称:</label>
+                <div class="controls">
+                    <span class="jsProjectName input-xlarge uneditable-input"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">类型:</label>
+                <div class="controls">
+                    <input name="type" type="radio" value="1" checked>文件
+                    <input name="type" type="radio" value="2">外链
+                </div>
+            </div>
+            <div class="projectTypeArea" data-value="1">
+                <div class="control-group">
+                    <label class="control-label">文件(zip):</label>
+                    <div class="controls">
+                        <input name="file" type="file" accept="application/zip">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">入口地址:</label>
+                    <div class="controls">
+                        <input name="entranceUri" type="text" placeholder="index.html">
+                    </div>
+                </div>
+            </div>
+            <div class="projectTypeArea" data-value="2">
+                <div class="control-group">
+                    <label class="control-label">链接:</label>
+                    <div class="controls">
+                        <input name="linkUrl" type="text" placeholder="跳转链接">
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button id="addVersionBtn" type="submit" class="btn">提交</button>
+                    <sapn id="addVersionTips" style="color: red;"></sapn>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/module/layer/layer.js"></script>
+<script type="text/javascript" src="static/js/index.js"></script>
+</body>
+</html>
