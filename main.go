@@ -1,10 +1,15 @@
 package main
 
 import (
-	"paper-show/cmd"
+	"github.com/go-spring/spring-core/gs"
+	_ "github.com/go-spring/starter-gin"
+	"log"
+	_ "paper-show/app"
 )
 
 func main() {
-	c := new(cmd.Cmd)
-	c.Run()
+	err := gs.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

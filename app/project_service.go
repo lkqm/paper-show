@@ -4,7 +4,6 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
-	"paper-show/common"
 	"path"
 	"strconv"
 	"time"
@@ -54,7 +53,7 @@ func (t *ProjectService) UploadProject(project *Project, fileHeader *multipart.F
 		return err
 	}
 	if project2save == nil {
-		return common.NewBizError("project not exists.")
+		return NewBizError("project not exists.")
 	}
 
 	if project.Type == ProjectTypeFile {

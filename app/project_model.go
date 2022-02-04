@@ -1,9 +1,14 @@
 package app
 
+const (
+	ProjectTypeFile = 1
+	ProjectTypeLink = 2
+)
+
 // PaperConf 配置
 type PaperConf struct {
-	WorkDir string
-	Title   string
+	WorkDir string `value:"${app.workdir:=}"`
+	Title   string `value:"${app.title:=原型大全}"`
 }
 
 // Project 项目实体
@@ -24,8 +29,3 @@ type Project struct {
 type ProjectJsonWrapper struct {
 	Projects []*Project `json:"projects"`
 }
-
-const (
-	ProjectTypeFile = 1
-	ProjectTypeLink = 2
-)

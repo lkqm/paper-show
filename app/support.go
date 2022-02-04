@@ -2,8 +2,11 @@ package app
 
 import (
 	"archive/zip"
+	"errors"
+	"github.com/go-spring/spring-core/web"
 	"io"
 	"math/rand"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -101,3 +104,36 @@ func getZipContentPaths(zipReader *zip.ReadCloser) []string {
 	}
 	return fileNames
 }
+
+// HandleError 接口处理异常, 返回是否处理
+func HandleError(c web.Context, err error) bool {
+	if err == nil {
+		return false
+	}
+
+	code := http.StatusInternalServerError
+	if errors.Is(err, new(BizError)) {
+		code = http.StatusBadRequest
+	}
+	c.SetStatus(code)
+	c.JSON(H{"message": err.Error()})
+	return true
+}
+
+// BizError 业务异常
+type BizError struct {
+	Message string
+}
+
+// NewBizError 构造函数
+func NewBizError(message string) *BizError {
+	return &BizError{
+		Message: message,
+	}
+}
+
+func (err *BizError) Error() string {
+	return err.Message
+}
+
+type H map[string]interface{}
